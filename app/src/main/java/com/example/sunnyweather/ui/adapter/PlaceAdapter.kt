@@ -1,5 +1,6 @@
 package com.example.sunnyweather.ui.adapter
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -17,11 +18,14 @@ class PlaceAdapter(private val fragment: Fragment, private val placeList: List<P
     inner class MyViewHolder(val binding: PlaceItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        TODO("Not yet implemented")
+        val view = PlaceItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return MyViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val place = placeList[position]
+        holder.binding.placeName.text = place.name
+        holder.binding.placeAddress.text = place.address
     }
 
     override fun getItemCount() = placeList.size

@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.sunnyweather.BaseActivity
 import com.example.sunnyweather.R
 import com.example.sunnyweather.databinding.ActivityMainBinding
 
@@ -15,7 +16,7 @@ import com.example.sunnyweather.databinding.ActivityMainBinding
 * @Description: 
 * @CreateDate: 2021-11-29 11:05
 */
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -23,8 +24,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        this.supportActionBar!!.hide()
 
+        setContentView(binding.root)
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
