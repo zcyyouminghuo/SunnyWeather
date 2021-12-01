@@ -32,7 +32,6 @@ class WeatherActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityWeatherBinding.inflate(layoutInflater)
 
-
         //透明化状态栏
         val controller=ViewCompat.getWindowInsetsController(binding.root)
         controller?.isAppearanceLightStatusBars=true
@@ -61,8 +60,13 @@ class WeatherActivity : BaseActivity() {
                 Toast.makeText(this, "无法成功获取天气信息", Toast.LENGTH_SHORT).show()
                 result.exceptionOrNull()?.printStackTrace()
             }
+            binding.swipeRefresh.isRefreshing=false
         })
         viewModel.refreshWeather(viewModel.locationLng, viewModel.locationLat)
+        binding.swipeRefresh.setColorSchemeResources(R.color.swipe_refresh)
+        binding.swipeRefresh.setOnRefreshListener {
+            refreshWeather()
+        }
     }
 
     private fun showWeatherInfo(weather: Weather) {
@@ -107,5 +111,10 @@ class WeatherActivity : BaseActivity() {
         binding.lifeIndex.ultravioletText.text = lifeIndex.ultraviolet[0].desc
         binding.lifeIndex.carWashingText.text = lifeIndex.carWashing[0].desc
         binding.weatherLayout.visibility = View.VISIBLE
+    }
+
+    fun refreshWeather(){
+        viewModel.refreshWeather(viewModel.locationLng,viewModel.locationLat)
+        binding.swipeRefresh.isRefreshing=true
     }
 }

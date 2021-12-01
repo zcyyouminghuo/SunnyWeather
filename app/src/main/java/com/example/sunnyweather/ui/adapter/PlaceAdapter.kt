@@ -10,13 +10,14 @@ import com.example.sunnyweather.BaseFragment
 import com.example.sunnyweather.databinding.PlaceItemBinding
 import com.example.sunnyweather.logic.model.Place
 import com.example.sunnyweather.logic.model.Weather
+import com.example.sunnyweather.ui.navigation.home.HomeFragment
 import com.example.sunnyweather.ui.weather.WeatherActivity
 
 /**
  * @Description:
  * @CreateDate: 2021/11/29 16:34
  */
-class PlaceAdapter(private val fragment: Fragment, private val placeList: List<Place>) :
+class PlaceAdapter(private val fragment: HomeFragment, private val placeList: List<Place>) :
     RecyclerView.Adapter<PlaceAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(val binding: PlaceItemBinding) : RecyclerView.ViewHolder(binding.root)
@@ -41,6 +42,7 @@ class PlaceAdapter(private val fragment: Fragment, private val placeList: List<P
                 putExtra("location_lat",place.location.lat)
                 putExtra("place_name",place.name)
             }
+            fragment.homeViewModel.savePlace(place)
             fragment.startActivity(intent)
             fragment.activity?.finish()
         }

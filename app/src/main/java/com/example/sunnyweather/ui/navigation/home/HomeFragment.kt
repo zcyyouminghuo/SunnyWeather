@@ -1,5 +1,6 @@
 package com.example.sunnyweather.ui.navigation.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +14,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sunnyweather.databinding.FragmentHomeBinding
 import com.example.sunnyweather.ui.adapter.PlaceAdapter
+import com.example.sunnyweather.ui.weather.WeatherActivity
 
 class HomeFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
 
     private val binding get() = _binding!!
@@ -55,19 +57,32 @@ class HomeFragment : Fragment() {
             }
         }
 
-        homeViewModel.placeLiveData.observe(viewLifecycleOwner, Observer { result->
-            val places=result.getOrNull()
-            if (places!=null){
-                binding.recyclerView.visibility=View.VISIBLE
-                binding.bgImageView.visibility=View.GONE
+        homeViewModel.placeLiveData.observe(viewLifecycleOwner, Observer { result ->
+            val places = result.getOrNull()
+            if (places != null) {
+                binding.recyclerView.visibility = View.VISIBLE
+                binding.bgImageView.visibility = View.GONE
                 homeViewModel.placeList.clear()
                 homeViewModel.placeList.addAll(places)
                 adapter.notifyDataSetChanged()
-            }else{
-                Toast.makeText(activity,"未能查询到任何地点",Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(activity, "未能查询到任何地点", Toast.LENGTH_SHORT).show()
                 result.exceptionOrNull()?.printStackTrace()
             }
         })
+
+        if (homeViewModel.isPlaceSaved()) {
+            val place = homeViewModel.getSavedPlace()
+            val intent = Intent(context, WeatherActivity::class.java).apply {
+                putExtra("location_lng", place.location.lng)
+                putExtra("location_lat", place.location.lat)
+                putExtra("place_name", place.name)
+            }
+            startActivity(intent)
+            activity?.finish()
+            return
+        }
+
     }
 
 

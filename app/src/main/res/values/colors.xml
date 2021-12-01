@@ -25,4 +25,5 @@
 
     <color name="color_input_background">@color/white</color>
     <color name="toolbar_background">@color/blue_400</color>
+    <color name="swipe_refresh">@color/blue_200</color>
 </resources>
