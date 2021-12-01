@@ -1,10 +1,9 @@
 package com.example.sunnyweather.logic.model
 
-import android.location.Location
 import com.google.gson.annotations.SerializedName
 
 /**
- * @Description: Entity
+ * @Description: city Entity
  * @CreateDate: 2021/11/29 11:29
  */
 data class PlaceResponse(val status: String, val places: List<Place>)
